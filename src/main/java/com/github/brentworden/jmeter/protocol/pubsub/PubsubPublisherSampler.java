@@ -9,7 +9,12 @@ public class PubsubPublisherSampler extends AbstractPubsubSampler {
 
     @Override
     public SampleResult sample(Entry e) {
-        return null;
+        SampleResult result = new SampleResult();
+        result.setSampleLabel(getName());
+        result.setSuccessful(true);
+        result.setResponseCode("200");
+
+        return result;
     }
 
 }
