@@ -3,9 +3,7 @@ package com.github.brentworden.jmeter.protocol.pubsub.gui;
 import com.github.brentworden.jmeter.protocol.pubsub.PubsubPublisherSampler;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
-import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
-import org.apache.jorphan.gui.JLabeledTextField;
 
 /**
  *
@@ -13,8 +11,6 @@ import org.apache.jorphan.gui.JLabeledTextField;
 public class PubsubPublisherSamplerGui extends AbstractPubsubSamplerGui {
 
     private static final long serialVersionUID = 1L;
-
-    private final JLabeledTextField projectId = new JLabeledTextField("Project ID");
 
     public PubsubPublisherSamplerGui() {
         super();
@@ -52,17 +48,22 @@ public class PubsubPublisherSamplerGui extends AbstractPubsubSamplerGui {
         return "pubsub_publisher_title";
     }
 
+    @Override
+    public String getStaticLabel() {
+        return "Pub/Sub Publisher";
+    }
+
     private void init() {
         // WARNING: called from ctor so must not be overridden
         setLayout(new BorderLayout());
         setBorder(makeBorder());
         add(makeTitlePanel(), BorderLayout.NORTH);
 
-        JPanel mainPanel = new VerticalPanel();
-        add(mainPanel, BorderLayout.CENTER);
+        JPanel mainPanel = createMainPanel();
+        JPanel projectPanel = createProjectPanel();
 
-        projectId.setToolTipText("Google Cloud Project ID");
-        mainPanel.add(projectId);
+        mainPanel.add(projectPanel, BorderLayout.NORTH);
+        add(mainPanel, BorderLayout.CENTER);
     }
 
     /**
