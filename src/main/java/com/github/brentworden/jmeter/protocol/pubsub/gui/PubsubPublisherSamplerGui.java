@@ -2,8 +2,10 @@ package com.github.brentworden.jmeter.protocol.pubsub.gui;
 
 import com.github.brentworden.jmeter.protocol.pubsub.PubsubPublisherSampler;
 import java.awt.BorderLayout;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jorphan.gui.JLabeledTextField;
 
 /**
  *
@@ -11,6 +13,8 @@ import org.apache.jmeter.testelement.TestElement;
 public class PubsubPublisherSamplerGui extends AbstractPubsubSamplerGui {
 
     private static final long serialVersionUID = 1L;
+
+    private final JLabeledTextField topicId = new JLabeledTextField("Topic ID");
 
     public PubsubPublisherSamplerGui() {
         super();
@@ -21,6 +25,7 @@ public class PubsubPublisherSamplerGui extends AbstractPubsubSamplerGui {
     public void clearGui() {
         super.clearGui();
         projectId.setText("");
+        topicId.setText("");
     }
 
     /**
@@ -31,6 +36,7 @@ public class PubsubPublisherSamplerGui extends AbstractPubsubSamplerGui {
         super.configure(el);
         PubsubPublisherSampler sampler = (PubsubPublisherSampler) el;
         projectId.setText(sampler.getProjectId());
+        topicId.setText(sampler.getTopicId());
     }
 
     /**
@@ -41,6 +47,14 @@ public class PubsubPublisherSamplerGui extends AbstractPubsubSamplerGui {
         PubsubPublisherSampler sampler = new PubsubPublisherSampler();
         modifyTestElement(sampler);
         return sampler;
+    }
+
+    private final JPanel createTopicPanel() {
+        JPanel topicPanel = new JPanel(new BorderLayout());
+        topicPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Pub/Sub Topic"));
+        projectId.setToolTipText("Pub/Sub Topic ID");
+        topicPanel.add(topicId);
+        return topicPanel;
     }
 
     @Override
@@ -61,8 +75,10 @@ public class PubsubPublisherSamplerGui extends AbstractPubsubSamplerGui {
 
         JPanel mainPanel = createMainPanel();
         JPanel projectPanel = createProjectPanel();
+        JPanel topicPanel = createTopicPanel();
 
-        mainPanel.add(projectPanel, BorderLayout.NORTH);
+        mainPanel.add(projectPanel);
+        mainPanel.add(topicPanel);
         add(mainPanel, BorderLayout.CENTER);
     }
 
@@ -77,5 +93,6 @@ public class PubsubPublisherSamplerGui extends AbstractPubsubSamplerGui {
         super.configureTestElement(sampler);
 
         sampler.setProjectId(projectId.getText());
+        sampler.setTopicId(topicId.getText());
     }
 }

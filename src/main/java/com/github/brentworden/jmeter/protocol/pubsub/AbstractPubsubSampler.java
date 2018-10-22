@@ -4,15 +4,15 @@ import org.apache.jmeter.samplers.AbstractSampler;
 
 public abstract class AbstractPubsubSampler extends AbstractSampler {
 
-    private static final long serialVersionUID = 1L;
+    private static final String PROPERTY_PUBSUB_PROJECT_ID = "pubsub.project.id";
 
-    private String projectId;
+    private static final long serialVersionUID = 1L;
 
     /**
      * @return the projectId
      */
     public String getProjectId() {
-        return projectId;
+        return getPropertyAsString(PROPERTY_PUBSUB_PROJECT_ID, "");
     }
 
     /**
@@ -20,7 +20,7 @@ public abstract class AbstractPubsubSampler extends AbstractSampler {
      *            the projectId to set
      */
     public void setProjectId(String projectId) {
-        this.projectId = projectId;
+        setProperty(PROPERTY_PUBSUB_PROJECT_ID, projectId);
     }
 
 }
